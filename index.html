@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#27221e">
+  <meta name="description" content="Jinwoo Kim is a computer science Ph.D. student at Yonsei University exploring the next generation of photography.">
+  <title>Jinwoo Kim · Generative Photography</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <script src="palette.js"></script>
+  <script src="season-scene.js" defer></script>
+  <script src="portrait.js" defer></script>
+  <script src="photo-viewer.js" defer></script>
+  <link rel="preload" href="assets/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="season-scene.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header page-width">
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="#research">Research</a>
+      <a href="#photos">Photos</a>
+      <a href="https://drive.google.com/file/d/1OHW83bD9fE0SDvyjNIeJPsRVj54nX0MT/view">CV</a>
+    </nav>
+    <a class="season-scene" href="index.html#top" aria-label="Back to home" title="Back to home"></a>
+    <div class="season-controls" id="palette" role="group" aria-label="Seasonal palettes" hidden>
+      <button type="button" data-palette="spring" aria-label="Spring palette" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="assets/season-icons.svg#spring"></use></svg></button>
+      <button type="button" data-palette="summer" aria-label="Summer palette" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="assets/season-icons.svg#summer"></use></svg></button>
+      <button type="button" data-palette="autumn" aria-label="Autumn palette" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="assets/season-icons.svg#autumn"></use></svg></button>
+      <button type="button" data-palette="winter" aria-label="Winter palette" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="assets/season-icons.svg#winter"></use></svg></button>
+    </div>
+  </header>
+
+  <main class="page-width" id="main">
+    <section class="hero" aria-labelledby="intro-heading">
+      <div class="hero-identity">
+        <div>
+          <p class="eyebrow">Yonsei University · Computer Science</p>
+          <h1 id="intro-heading">Jinwoo Kim</h1>
+          <nav class="profile-links" aria-label="Contact and profiles">
+            <a href="mailto:jinwoo-kim@yonsei.ac.kr">Email</a>
+            <a href="https://github.com/hello-jinwoo">GitHub</a>
+            <a href="https://www.linkedin.com/in/jinwoo-kim-a00658206/">LinkedIn</a>
+          </nav>
+        </div>
+
+        <figure class="portrait">
+          <div class="portrait-frame">
+            <img class="portrait-color" src="assets/portrait.webp" alt="Jinwoo Kim holding a camera in front of a city skyline at night" width="1380" height="1000" fetchpriority="high">
+            <div class="sensor-preview" aria-hidden="true">
+              <img src="assets/portrait-preview.webp" alt="" width="276" height="200" fetchpriority="high">
+            </div>
+            <span class="portrait-focus" aria-hidden="true"></span>
+            <svg class="portrait-shutter" viewBox="-139.38 -62 276 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <linearGradient id="blade-metal" x1="15" y1="65" x2="72" y2="-88" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#343d3e"/>
+                  <stop offset=".48" stop-color="#252c2e"/>
+                  <stop offset="1" stop-color="#151b1d"/>
+                </linearGradient>
+                <g id="aperture-blade">
+                  <path class="blade-face" fill="url(#blade-metal)" stroke="#202729" stroke-width=".5"/>
+                  <path class="blade-seam" fill="none" stroke="#bac4c3" stroke-opacity=".35" stroke-width=".62"/>
+                </g>
+              </defs>
+              <g class="blade-ring"></g>
+            </svg>
+            <input class="portrait-toggle" type="checkbox" autocomplete="off" aria-label="Develop portrait">
+            <span class="shoot-hint" aria-hidden="true">Click to shoot 📸</span>
+          </div>
+        </figure>
+      </div>
+
+      <div class="hero-intro">
+        <blockquote class="research-question">
+          <p>What makes a good photograph?</p>
+        </blockquote>
+        <p class="bio">
+          I’m a Ph.D. student at Yonsei University, advised by
+          <a href="https://sites.google.com/site/seonjookim">Prof. Seon Joo Kim</a>.
+          I explore what the next generation of photography might look like. One direction I’m drawn
+          to is <strong>generative photography</strong> and its potential to make creating and editing
+          images more personal.
+        </p>
+        <p class="next-step">
+          I expect to finish my Ph.D. in <time datetime="2027-02">February 2027</time>.
+          I’m curious to see where this path takes me next.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section" id="research" aria-labelledby="research-heading">
+      <div class="section-heading">
+        <h2 id="research-heading">Selected Research</h2>
+        <a class="section-link" href="publications.html">All publications</a>
+      </div>
+
+      <div class="publications">
+        <article class="publication">
+          <img class="research-image" src="assets/photographic-style.webp" width="664" height="380" loading="lazy" decoding="async" alt="Two color and tone treatments of the same candles and autumn leaves">
+          <div class="publication-copy">
+            <p class="eyebrow venue">CVPR 2026</p>
+            <h3>Learning Personalized Photographic Style from Pairwise User Preferences</h3>
+            <p class="authors"><strong>Jinwoo Kim</strong>, Jihye Yoo, Seon Joo Kim</p>
+            <p class="publication-note">Learns a person’s preferred color and tone from choices between pairs of photo edits.</p>
+            <div class="publication-links">
+              <a href="https://openaccess.thecvf.com/content/CVPR2026/html/Kim_Learning_Personalized_Photographic_Style_from_Pairwise_User_Preferences_CVPR_2026_paper.html" aria-label="Read the Photographic Style paper">Paper</a>
+              <a href="https://hello-jinwoo.github.io/pps/" aria-label="Visit the Photographic Style project">Project</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="publication">
+          <img class="research-image" src="assets/orida.webp" width="664" height="380" loading="lazy" decoding="async" alt="The same chessboard photographed empty and with an object placed on it">
+          <div class="publication-copy">
+            <p class="eyebrow venue">CVPR 2025</p>
+            <h3>ORIDa: Object-centric Real-world Image Composition Dataset</h3>
+            <p class="authors"><strong>Jinwoo Kim</strong>, Sangmin Han, Jinho Jeong, Jiwoo Choi, Dongyoung Kim, Seon Joo Kim</p>
+            <p class="publication-note">A dataset of 30,000+ photographs of 200 objects, including matched scenes with and without an object.</p>
+            <div class="publication-links">
+              <a href="https://arxiv.org/abs/2506.08964" aria-label="Read the ORIDa paper">Paper</a>
+              <a href="https://hello-jinwoo.github.io/orida/" aria-label="Visit the ORIDa project">Project</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="publication" id="slotaug">
+          <div class="research-image research-comparison" role="img" aria-label="SlotAug material editing. The red sphere turns matte and the front gray sphere becomes reflective.">
+            <img src="assets/slotaug-material-before.webp" width="276" height="276" loading="lazy" decoding="async" alt="">
+            <img src="assets/slotaug-material-after.webp" width="276" height="276" loading="lazy" decoding="async" alt="">
+          </div>
+          <div class="publication-copy">
+            <p class="eyebrow venue">CVPR Workshops 2024 · CORR</p>
+            <h3>Towards Interpretable Controllability in Object-Centric Learning</h3>
+            <p class="authors"><strong>Jinwoo Kim</strong>*, Janghyuk Choi*, Jaehyun Kang, Changyeon Lee, Ho-Jin Choi, Seon Joo Kim <span class="equal-contribution">(* equal contribution)</span></p>
+            <p class="publication-note"><strong>SlotAug</strong> learns object representations that let you move, resize, or recolor individual objects in a scene.</p>
+            <div class="publication-links">
+              <a href="https://arxiv.org/abs/2310.08929" aria-label="Read the SlotAug paper">Paper</a>
+              <a href="https://corrworkshop.github.io/papers" aria-label="See the SlotAug workshop listing">Workshop</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="background-sections">
+      <section class="background-section" id="academic-service" aria-labelledby="service-heading">
+        <h2 id="service-heading">Academic Service</h2>
+        <ul class="background-list" role="list">
+          <li>
+            <h3>Top Reviewer, NeurIPS</h3>
+            <p>2026</p>
+          </li>
+          <li>
+            <h3>Reviewer since 2023</h3>
+            <p>CVPR, ICCV, ECCV, NeurIPS, AAAI, ICML, TPAMI, TIP</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="background-section" id="additional-experiences" aria-labelledby="experiences-heading">
+        <h2 id="experiences-heading">Additional Experiences</h2>
+        <ul class="background-list" role="list">
+          <li>
+            <div class="experience-heading">
+              <h3>Naver Clova</h3>
+              <span class="experience-dates"><time datetime="2021-12">Dec 2021</time>–<time datetime="2022-06">Jun 2022</time></span>
+            </div>
+            <p>Research Intern, Video Team</p>
+          </li>
+          <li>
+            <div class="experience-heading">
+              <h3>Hyundai Mobis</h3>
+              <span class="experience-dates"><time datetime="2019-03">Mar</time>–<time datetime="2019-07">Jul 2019</time></span>
+            </div>
+            <p>Data Science Team</p>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="content-section" id="photos" aria-labelledby="photos-heading">
+      <div class="section-heading">
+        <h2 id="photos-heading">Photo Gallery</h2>
+        <a class="section-link" href="gallery.html">View all photos</a>
+      </div>
+      <div class="photo-grid">
+        <figure class="photo photo-wide">
+          <a href="assets/gallery/BALI_honeymoon.webp" aria-label="View BALI_honeymoon at full size">
+            <img src="assets/gallery/BALI_honeymoon.webp" width="1600" height="1066" loading="lazy" decoding="async" alt="A table and chairs on a shaded terrace overlooking the sea">
+          </a>
+          <figcaption>BALI_<wbr>honeymoon</figcaption>
+        </figure>
+        <figure class="photo">
+          <a href="assets/gallery/MALMO_somewhere.webp" aria-label="View MALMO_somewhere at full size">
+            <img src="assets/gallery/MALMO_somewhere.webp" width="1200" height="1600" loading="lazy" decoding="async" alt="Two distant figures on a green field beneath a blue sky">
+          </a>
+          <figcaption>MALMO_<wbr>somewhere</figcaption>
+        </figure>
+        <figure class="photo">
+          <a href="assets/gallery/SINCHON_railway.webp" aria-label="View SINCHON_railway at full size">
+            <img src="assets/gallery/SINCHON_railway.webp" width="1198" height="1598" loading="lazy" decoding="async" alt="Concrete railway arches seen from below the crossing tracks">
+          </a>
+          <figcaption>SINCHON_<wbr>railway</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer page-width">
+    <a href="https://sites.google.com/site/seonjookim">Computational Intelligence and Photography Lab</a>
+    <a href="#top">Back to top</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+.season-scene {
+  --take: 3.85s;
+  --look: 7deg;
+  --lens-glint: #faeac7;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: clamp(14rem, 23vw, 17.5rem);
+  transform: translateX(-50%);
+  cursor: pointer;
+  user-select: none;
+}
+
+.season-scene:empty, .scene-subject { display: none; }
+.season-scene svg { display: block; width: 100%; height: auto; }
+
+:root[data-season='spring'] .scene-subject[data-subject='spring'],
+:root[data-season='summer'] .scene-subject[data-subject='summer'],
+:root[data-season='autumn'] .scene-subject[data-subject='autumn'],
+:root[data-season='winter'] .scene-subject[data-subject='winter'] { display: inline; }
+
+:root[data-season='spring'] .season-scene { --look: 9deg; --lens-glint: #6d8050; }
+:root[data-season='summer'] .season-scene { --look: -9deg; }
+:root[data-season='winter'] .season-scene { --look: -6deg; --lens-glint: #527f98; }
+:root:is([data-season='summer'], [data-season='winter']) .scene-world {
+  transform: scaleX(-1);
+  transform-origin: 120px 0;
+}
+
+.scene-head { transform-origin: 0 -21px; }
+.scene-camera { transform-origin: 2px -16px; }
+.scene-glint { opacity: 0; }
+.paw-far { transform-origin: -5px -9px; --stride-a: 22deg; --stride-b: -19deg; }
+.paw-near { transform-origin: 3px -9px; --stride-a: -19deg; --stride-b: 22deg; }
+.autumn-maple { transform: rotate(-53deg); }
+.summer-light { opacity: .72; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .is-playing .scene-travel { animation: photographer-walk var(--take) both; }
+  .is-playing .scene-facing { animation: photographer-turn var(--take) ease-in-out both; }
+  .is-playing .scene-body { animation: photographer-step var(--take) ease-in-out both; }
+  .is-playing :is(.paw-far, .paw-near) { animation: photographer-stride var(--take) ease-in-out both; }
+  .is-playing .scene-head { animation: photographer-look var(--take) ease-in-out both; }
+  .is-playing .scene-camera { animation: raise-camera var(--take) ease-in-out both; }
+  .is-playing .scene-glint { animation: lens-glint var(--take) linear both; }
+
+  .is-playing .spring-stem { animation: sprout var(--take) ease-out both; }
+  .is-playing .spring-leaf-left { --fold: 58deg; animation: unfurl-leaf var(--take) ease-out both; }
+  .is-playing .spring-leaf-right { --fold: -42deg; animation: unfurl-leaf var(--take) ease-out both; }
+  .is-playing .summer-crown { animation: canopy-breeze var(--take) ease-in-out both; }
+  .is-playing .summer-light { animation: canopy-light var(--take) ease-in-out both; }
+  .is-playing .autumn-maple { animation: falling-maple var(--take) ease-in-out both; }
+  .is-playing .autumn-small { animation: falling-leaf var(--take) ease-in-out both; }
+  .is-playing .winter-crystal { animation: falling-crystal var(--take) ease-in-out both; }
+  .is-playing .snow-grain { animation: flurry var(--take) linear both; }
+  .is-playing .winter-bank { animation: gathering-snow var(--take) ease-out both; }
+}
+
+/* The subject moves first. The photographer notices, walks, makes one exposure and returns. */
+@keyframes photographer-walk {
+  0%, 16% { transform: translateX(0); animation-timing-function: cubic-bezier(.4,.05,.35,1); }
+  42%, 71% { transform: translateX(38px); animation-timing-function: cubic-bezier(.4,.05,.35,1); }
+  94%, 100% { transform: translateX(0); }
+}
+
+@keyframes photographer-turn {
+  0%, 67% { transform: scaleX(1); }
+  71%, 93% { transform: scaleX(-1); }
+  97%, 100% { transform: scaleX(1); }
+}
+
+@keyframes photographer-step {
+  0%, 16%, 24%, 32%, 42%, 65%, 71%, 79%, 87%, 94%, 100% { transform: translateY(0); }
+  20%, 28%, 36%, 75%, 83%, 91% { transform: translateY(-1.7px); }
+  49%, 59% { transform: translateY(1px); }
+}
+
+@keyframes photographer-stride {
+  0%, 16%, 42%, 71%, 94%, 100% { transform: rotate(0); }
+  19%, 28%, 36%, 74%, 82%, 90% { transform: rotate(var(--stride-a)); }
+  24%, 32%, 39%, 78%, 86% { transform: rotate(var(--stride-b)); }
+}
+
+@keyframes photographer-look {
+  0%, 5%, 24%, 40%, 67%, 100% { transform: rotate(0); }
+  12%, 17% { transform: translateX(1px) rotate(var(--look)); }
+  49%, 60% { transform: translateX(1.2px) rotate(var(--look)); }
+}
+
+@keyframes raise-camera {
+  0%, 39%, 67%, 100% { transform: translate(0, 0) rotate(0); }
+  49%, 59% { transform: translate(-.6px, -11.1px) rotate(var(--look)); }
+}
+
+@keyframes lens-glint {
+  0%, 52%, 58%, 100% { opacity: 0; }
+  53.5% { opacity: 1; }
+  55% { opacity: .72; }
+}
+
+@keyframes sprout {
+  0%, 3% { transform: scale(.24, .05); }
+  27% { transform: scale(.93, 1.04) rotate(-2deg); }
+  46%, 100% { transform: scale(1, 1); }
+}
+
+@keyframes unfurl-leaf {
+  0%, 9% { transform: rotate(var(--fold)) scale(.08); }
+  36% { transform: rotate(-3deg) scale(1.03); }
+  48%, 100% { transform: rotate(0) scale(1); }
+}
+
+@keyframes canopy-breeze {
+  0% { transform: scale(.65, .72) rotate(-3deg); }
+  22% { transform: scale(1, 1) rotate(6deg); }
+  41% { transform: rotate(-5deg); }
+  58% { transform: rotate(3deg); }
+  80%, 100% { transform: rotate(0); }
+}
+
+@keyframes canopy-light {
+  0%, 15% { opacity: .15; transform: translateX(-2px); }
+  34% { opacity: 1; transform: translateX(1.5px); }
+  54% { opacity: .42; transform: translateX(-.8px); }
+  78%, 100% { opacity: .72; transform: translateX(0); }
+}
+
+@keyframes falling-maple {
+  0% { transform: translate(10px, -40px) rotate(27deg); opacity: 0; }
+  8% { opacity: 1; }
+  22% { transform: translate(-8px, -30px) rotate(-35deg); }
+  39% { transform: translate(4px, -19px) rotate(32deg); }
+  55% { transform: translate(-4px, -7px) rotate(-66deg); }
+  67%, 100% { transform: translate(0, 0) rotate(-53deg); }
+}
+
+@keyframes falling-leaf {
+  0% { transform: translate(-7px, -31px) rotate(-58deg); opacity: 0; }
+  6% { opacity: 1; }
+  23% { transform: translate(4px, -17px) rotate(14deg); }
+  43% { transform: translate(-3px, -4px) rotate(-17deg); }
+  52%, 100% { transform: translate(0, 0) rotate(0); }
+}
+
+@keyframes falling-crystal {
+  0% { opacity: 0; transform: translate(7px, -37px) rotate(68deg); }
+  11% { opacity: 1; }
+  29% { transform: translate(-7px, -19px) rotate(37deg); }
+  54% { transform: translate(3px, -5px) rotate(10deg); }
+  75%, 100% { transform: translate(0, 0) rotate(0); }
+}
+
+@keyframes flurry {
+  0% { opacity: 0; transform: translate(5px, -22px); }
+  19% { opacity: .9; }
+  44% { transform: translate(-3px, -9px); }
+  77%, 100% { opacity: 1; transform: translate(0, 0); }
+}
+
+@keyframes gathering-snow {
+  0% { transform: scale(.74, .25); }
+  61%, 100% { transform: scale(1); }
+}
+
+@media (max-width: 44rem) {
+  .site-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-content: end;
+    row-gap: 0;
+    padding-top: .2rem;
+  }
+
+  .site-nav { grid-area: 1 / 1; }
+  .season-controls { grid-area: 1 / 2; }
+  .season-scene {
+    position: static;
+    transform: none;
+    grid-area: 2 / 1 / 3 / -1;
+    justify-self: center;
+    width: min(13.75rem, 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-camera { transform: translate(-.6px, -11.1px) rotate(var(--look)); }
+}

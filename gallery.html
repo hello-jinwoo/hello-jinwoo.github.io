@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#27221e">
+  <meta name="description" content="Photographs by Jinwoo Kim.">
+  <title>Photo Gallery · Jinwoo Kim</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <script src="palette.js"></script>
+  <script src="season-scene.js" defer></script>
+  <script src="photo-viewer.js" defer></script>
+  <link rel="preload" href="assets/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="season-scene.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header page-width">
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="index.html#research">Research</a>
+      <a href="index.html#photos">Photos</a>
+      <a href="https://drive.google.com/file/d/1OHW83bD9fE0SDvyjNIeJPsRVj54nX0MT/view">CV</a>
+    </nav>
+    <a class="season-scene" href="index.html#top" aria-label="Back to home" title="Back to home"></a>
+    <div class="season-controls" id="palette" role="group" aria-label="Seasonal palettes" hidden>
+      <button type="button" data-palette="spring" aria-label="Spring palette" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="assets/season-icons.svg#spring"></use></svg></button>
+      <button type="button" data-palette="summer" aria-label="Summer palette" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="assets/season-icons.svg#summer"></use></svg></button>
+      <button type="button" data-palette="autumn" aria-label="Autumn palette" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="assets/season-icons.svg#autumn"></use></svg></button>
+      <button type="button" data-palette="winter" aria-label="Winter palette" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="assets/season-icons.svg#winter"></use></svg></button>
+    </div>
+  </header>
+
+  <main class="page-width gallery-archive" id="main">
+    <div class="archive-heading">
+      <h1>Photo Gallery</h1>
+      <a class="section-link" href="index.html#photos">Back to home</a>
+    </div>
+      <div class="photo-grid">
+        <figure class="photo photo-wide">
+          <a href="assets/gallery/BALI_honeymoon.webp" aria-label="View BALI_honeymoon at full size">
+            <img src="assets/gallery/BALI_honeymoon.webp" width="1600" height="1066" loading="lazy" decoding="async" alt="A table and chairs on a shaded terrace overlooking the sea">
+          </a>
+          <figcaption>BALI_<wbr>honeymoon</figcaption>
+        </figure>
+        <figure class="photo">
+          <a href="assets/gallery/MALMO_somewhere.webp" aria-label="View MALMO_somewhere at full size">
+            <img src="assets/gallery/MALMO_somewhere.webp" width="1200" height="1600" loading="lazy" decoding="async" alt="Two distant figures on a green field beneath a blue sky">
+          </a>
+          <figcaption>MALMO_<wbr>somewhere</figcaption>
+        </figure>
+        <figure class="photo">
+          <a href="assets/gallery/PARIS_impression.webp" aria-label="View PARIS_impression at full size">
+            <img src="assets/gallery/PARIS_impression.webp" width="1200" height="1600" loading="lazy" decoding="async" alt="Sunlit flowers growing beside a gravel path">
+          </a>
+          <figcaption>PARIS_<wbr>impression</figcaption>
+        </figure>
+        <figure class="photo">
+          <a href="assets/gallery/SEOUL_cloud.webp" aria-label="View SEOUL_cloud at full size">
+            <img src="assets/gallery/SEOUL_cloud.webp" width="1200" height="1600" loading="lazy" decoding="async" alt="A neighborhood storefront beneath power lines and apartment buildings">
+          </a>
+          <figcaption>SEOUL_<wbr>cloud</figcaption>
+        </figure>
+        <figure class="photo">
+          <a href="assets/gallery/SINCHON_railway.webp" aria-label="View SINCHON_railway at full size">
+            <img src="assets/gallery/SINCHON_railway.webp" width="1198" height="1598" loading="lazy" decoding="async" alt="Concrete railway arches seen from below the crossing tracks">
+          </a>
+          <figcaption>SINCHON_<wbr>railway</figcaption>
+        </figure>
+        <figure class="photo">
+          <a href="assets/gallery/SINCHON_way_back_home.webp" aria-label="View SINCHON_way_back_home at full size">
+            <img src="assets/gallery/SINCHON_way_back_home.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="Buses on a city street beyond a crosswalk">
+          </a>
+          <figcaption>SINCHON_<wbr>way_<wbr>back_<wbr>home</figcaption>
+        </figure>
+        <figure class="photo">
+          <a href="assets/gallery/YONSEI_autumn.webp" aria-label="View YONSEI_autumn at full size">
+            <img src="assets/gallery/YONSEI_autumn.webp" width="1200" height="1600" loading="lazy" decoding="async" alt="A dark bird among golden autumn leaves beneath a curved concrete overhang">
+          </a>
+          <figcaption>YONSEI_<wbr>autumn</figcaption>
+        </figure>
+        <figure class="photo">
+          <a href="assets/gallery/YONSEI_together.webp" aria-label="View YONSEI_together at full size">
+            <img src="assets/gallery/YONSEI_together.webp" width="1050" height="1400" loading="lazy" decoding="async" alt="A building facade and bare branches framing the evening sky">
+          </a>
+          <figcaption>YONSEI_<wbr>together</figcaption>
+        </figure>
+      </div>
+  </main>
+
+  <footer class="site-footer page-width">
+    <a href="https://sites.google.com/site/seonjookim">Computational Intelligence and Photography Lab</a>
+    <a href="#top">Back to top</a>
+  </footer>
+</body>
+</html>
