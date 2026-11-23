@@ -224,10 +224,6 @@ a:focus-visible,
   margin-top: 1.05rem;
 }
 
-.bio p + p {
-  margin-top: .4rem;
-}
-
 .bio a, .next-step time, strong {
   color: var(--ink);
 }
