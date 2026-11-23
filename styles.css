@@ -188,6 +188,7 @@ a:focus-visible,
   margin-top: clamp(1.5rem, 3.25vw, 2.75rem);
   padding-top: clamp(1.2rem, 2.35vw, 1.85rem);
   border-top: 1px solid var(--rule);
+  text-align: center;
 }
 
 .eyebrow {
@@ -207,20 +208,24 @@ a:focus-visible,
 }
 
 .research-question {
-  padding-inline-start: .75rem;
-  border-inline-start: 1px solid var(--accent);
   color: var(--accent);
-  font: italic 400 clamp(1.45rem, 2.4vw, 2.3rem)/1.15 var(--serif);
+  font: italic 400 clamp(1.3rem, 2vw, 1.7rem)/1.2 var(--serif);
   text-wrap: pretty;
 }
 
 .bio, .next-step {
-  max-width: 82ch;
+  max-width: 86ch;
+  margin-inline: auto;
   color: var(--muted);
+  text-wrap: pretty;
 }
 
 .bio {
   margin-top: 1.05rem;
+}
+
+.bio p + p {
+  margin-top: .4rem;
 }
 
 .bio a, .next-step time, strong {
@@ -228,7 +233,7 @@ a:focus-visible,
 }
 
 .next-step {
-  margin-top: .65rem;
+  margin-top: 1.35rem;
 }
 
 .next-step time {
@@ -682,10 +687,6 @@ a:focus-visible,
 
   :is(.hero, .archive-heading) h1 {
     font-size: clamp(4.15rem, 10.2vw, 7rem);
-  }
-
-  .research-question {
-    font-size: clamp(1.45rem, 4.1vw, 2rem);
   }
 
   .bio {
