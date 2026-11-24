@@ -387,6 +387,7 @@ a:hover { color: var(--brass); }
 }
 .description { max-width: 45ch; margin-top: 1.05rem; color: var(--secondary); }
 .authors { margin-top: .65rem; color: var(--secondary); font-size: .9rem; }
+.authors > span { display: inline-block; max-width: 100%; }
 .authors strong { font-weight: 570; color: var(--type); }
 .lead-copy .study-links { margin-top: .35rem; }
 .study-row {
@@ -600,7 +601,6 @@ html:has(.photo-viewer[open]) { overflow: hidden; }
 }
 .archive-list h3 span { display: inline-block; width: max-content; max-width: 100%; }
 .archive-list .authors { max-width: 79ch; margin-top: .42rem; font-size: 1rem; line-height: 1.55; }
-.archive-list .authors > span { display: inline-block; max-width: 100%; }
 .archive-list .authors strong { font-weight: 650; }
 .equal-contribution { font-size: .9em; }
 .archive-meta, .publication-links { display: flex; flex-wrap: wrap; align-items: center; }
