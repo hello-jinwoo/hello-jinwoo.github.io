@@ -35,43 +35,36 @@
 
   <main class="page-width" id="main">
     <section class="hero" aria-labelledby="intro-heading">
-      <div class="hero-identity">
-        <div>
-          <p class="eyebrow">Yonsei University · Computer Science</p>
-          <h1 id="intro-heading">Jinwoo Kim</h1>
-          <nav class="profile-links" aria-label="Contact and profiles">
-            <a href="mailto:jinwoo-kim@yonsei.ac.kr">Email</a>
-            <a href="https://github.com/hello-jinwoo">GitHub</a>
-            <a href="https://www.linkedin.com/in/jinwoo-kim-a00658206/">LinkedIn</a>
-          </nav>
-        </div>
-
-        <figure class="portrait">
-          <div class="portrait-frame">
-            <img class="portrait-color" src="assets/portrait.webp" alt="Jinwoo Kim holding a camera in front of a city skyline at night" width="1380" height="1000" fetchpriority="high">
-            <div class="sensor-preview" aria-hidden="true">
-              <img src="assets/portrait-preview.webp" alt="" width="276" height="200" fetchpriority="high">
-            </div>
-            <span class="portrait-focus" aria-hidden="true"></span>
-            <svg class="portrait-shutter" viewBox="-139.38 -62 276 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <defs>
-                <linearGradient id="blade-metal" x1="15" y1="65" x2="72" y2="-88" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#343d3e"/>
-                  <stop offset=".48" stop-color="#252c2e"/>
-                  <stop offset="1" stop-color="#151b1d"/>
-                </linearGradient>
-                <g id="aperture-blade">
-                  <path class="blade-face" fill="url(#blade-metal)" stroke="#202729" stroke-width=".5"/>
-                  <path class="blade-seam" fill="none" stroke="#bac4c3" stroke-opacity=".35" stroke-width=".62"/>
-                </g>
-              </defs>
-              <g class="blade-ring"></g>
-            </svg>
-            <input class="portrait-toggle" type="checkbox" autocomplete="off" aria-label="Develop portrait">
-            <span class="shoot-hint" aria-hidden="true">Click to shoot 📸</span>
+      <figure class="portrait">
+        <div class="portrait-frame">
+          <img class="portrait-color" src="assets/portrait.webp" alt="Jinwoo Kim holding a camera in front of a city skyline at night" width="1380" height="1000" fetchpriority="high">
+          <div class="sensor-preview" aria-hidden="true">
+            <img src="assets/portrait-preview.webp" alt="" width="276" height="200" fetchpriority="high">
           </div>
-        </figure>
-      </div>
+          <span class="portrait-focus" aria-hidden="true"></span>
+          <svg class="portrait-shutter" viewBox="-139.38 -62 276 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="blade-metal" x1="15" y1="65" x2="72" y2="-88" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#343d3e"/>
+                <stop offset=".48" stop-color="#252c2e"/>
+                <stop offset="1" stop-color="#151b1d"/>
+              </linearGradient>
+              <g id="aperture-blade">
+                <path class="blade-face" fill="url(#blade-metal)" stroke="#202729" stroke-width=".5"/>
+                <path class="blade-seam" fill="none" stroke="#bac4c3" stroke-opacity=".35" stroke-width=".62"/>
+              </g>
+            </defs>
+            <g class="blade-ring"></g>
+          </svg>
+          <input class="portrait-toggle" type="checkbox" autocomplete="off" aria-label="Develop portrait">
+          <span class="shoot-hint" aria-hidden="true">Click to shoot 📸</span>
+        </div>
+      </figure>
+
+      <header class="hero-heading">
+        <h1 id="intro-heading">Jinwoo Kim</h1>
+        <p class="hero-affiliation">Yonsei University, Computer Science</p>
+      </header>
 
       <div class="hero-intro">
         <blockquote class="research-question">
@@ -93,6 +86,12 @@
           I’m curious to see where this path takes me next.
         </p>
       </div>
+
+      <nav class="profile-links" aria-label="Contact and profiles">
+        <a href="mailto:jinwoo-kim@yonsei.ac.kr">Email</a>
+        <a href="https://github.com/hello-jinwoo">GitHub</a>
+        <a href="https://www.linkedin.com/in/jinwoo-kim-a00658206/">LinkedIn</a>
+      </nav>
     </section>
 
     <section class="content-section" id="research" aria-labelledby="research-heading">

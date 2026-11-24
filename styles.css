@@ -174,21 +174,16 @@ a:focus-visible,
 }
 
 .hero {
-  padding-block: clamp(2.5rem, 5vw, 4.75rem) clamp(2.75rem, 5.2vw, 4.75rem);
+  padding-block: clamp(1.5rem, 3.5vw, 2.25rem) clamp(2.5rem, 5vw, 3.75rem);
+  text-align: center;
 }
 
-.hero-identity {
-  display: grid;
-  grid-template-columns: minmax(0, 1.26fr) minmax(0, .74fr);
-  align-items: center;
-  gap: clamp(1.5rem, 5.2vw, 5rem);
+.hero-heading {
+  margin-top: 1.15rem;
 }
 
 .hero-intro {
-  margin-top: clamp(1.5rem, 3.25vw, 2.75rem);
-  padding-top: clamp(1.2rem, 2.35vw, 1.85rem);
-  border-top: 1px solid var(--rule);
-  text-align: center;
+  margin-top: clamp(1.4rem, 2.6vw, 1.75rem);
 }
 
 .eyebrow {
@@ -198,13 +193,20 @@ a:focus-visible,
   text-transform: uppercase;
 }
 
-:is(.hero, .archive-heading) h1 {
+.archive-heading h1 {
   font: 400 clamp(4.5rem, 8.8vw, 8.5rem)/.93 var(--serif);
   letter-spacing: -.025em;
 }
 
 .hero h1 {
-  margin-block: .55rem .35rem;
+  font: 400 clamp(3.4rem, 7vw, 5.65rem)/.98 var(--serif);
+  letter-spacing: -.025em;
+}
+
+.hero-affiliation {
+  margin-top: .5rem;
+  color: var(--muted);
+  font: .875rem/1.45 var(--mono);
 }
 
 .research-question {
@@ -239,7 +241,8 @@ a:focus-visible,
 
 .profile-links {
   gap: .125rem 1.25rem;
-  margin-top: .65rem;
+  justify-content: center;
+  margin-top: 1rem;
   color: var(--accent);
   font-size: .9rem;
   font-weight: 575;
@@ -252,8 +255,8 @@ a:focus-visible,
 }
 
 .portrait {
-  width: min(100%, 24rem);
-  justify-self: end;
+  width: min(100%, clamp(12rem, 28vw, 16rem));
+  margin-inline: auto;
 }
 
 .portrait-frame {
@@ -677,11 +680,7 @@ a:focus-visible,
 [data-palette='winter'] { --swatch: var(--winter-swatch); }
 
 @media (max-width: 49rem) {
-  .hero {
-    padding-block: 2.5rem 2.75rem;
-  }
-
-  :is(.hero, .archive-heading) h1 {
+  .archive-heading h1 {
     font-size: clamp(4.15rem, 10.2vw, 7rem);
   }
 
@@ -712,16 +711,6 @@ a:focus-visible,
 
   .site-nav {
     column-gap: .6rem;
-  }
-
-  .hero-identity {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.35rem;
-  }
-
-  .portrait {
-    width: min(89%, 23rem);
-    justify-self: center;
   }
 
   .publication {
