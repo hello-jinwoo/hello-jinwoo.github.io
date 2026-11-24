@@ -255,7 +255,7 @@ a:focus-visible,
 }
 
 .portrait {
-  width: min(100%, clamp(12rem, 28vw, 16rem));
+  width: min(100%, clamp(11rem, 26vw, 14.5rem));
   margin-inline: auto;
 }
 
@@ -338,8 +338,8 @@ a:focus-visible,
   --line: linear-gradient(currentColor, currentColor);
   position: absolute;
   z-index: 1;
-  top: 31%;
-  left: 50.5%;
+  top: 50%;
+  left: 50%;
   width: 26%;
   height: 35%;
   transform: translate(-50%, -50%);

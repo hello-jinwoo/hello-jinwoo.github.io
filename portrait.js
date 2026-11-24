@@ -9,10 +9,11 @@
   const pitch = 2 * Math.PI / bladeCount;
   const cos = Math.cos(pitch);
   const sin = Math.sin(pitch);
+  const closedRadius = 1.4;
+  const readyRadius = 134;
   const openRadius = 224;
   const rim = [202, -227];
   let animation = 0;
-  const readyRadius = 146;
   const hint = frame.querySelector('.shoot-hint');
 
   for (let index = 0; index < bladeCount; index++) {
@@ -28,8 +29,8 @@
 
   // Each leaf ends at the swept edge of its neighbour, at every aperture size.
   const nextRim = nextBlade(rim);
-  function drawIris(radius, centerOffset) {
-    const closed = (openRadius - radius) / (openRadius - 1.4);
+  function drawIris(radius) {
+    const closed = (openRadius - radius) / (openRadius - closedRadius);
     const tip = [radius, 0];
     const innerControl = [radius * .925, radius * .337];
     const sweep = [radius + (275 - radius) * .6, -17 - 13 * closed];
@@ -38,7 +39,7 @@
       'Q' + sweep + ' ' + tip + 'Z';
     face.setAttribute('d', outline);
     seam.setAttribute('d', 'M' + tip + 'Q' + sweep + ' ' + rim);
-    ring.setAttribute('transform', 'translate(0 ' + centerOffset + ') rotate(' + (-16 + 26 * closed) + ')');
+    ring.setAttribute('transform', 'rotate(' + (-16 + 26 * closed) + ')');
   }
 
   function settle() {
@@ -56,7 +57,7 @@
   }
 
   function capture() {
-    drawIris(readyRadius, 38);
+    drawIris(readyRadius);
     frame.classList.add('is-exposing');
     const start = performance.now();
     const closeMs = 178;
@@ -70,12 +71,12 @@
         settle();
         return;
       }
-      const closed = elapsed < openAt
+      const closing = elapsed < openAt;
+      const closed = closing
         ? ease(Math.min(1, elapsed / closeMs))
         : 1 - ease((elapsed - openAt) / openMs);
-      const closing = elapsed < openAt;
       const outerRadius = closing ? readyRadius : openRadius;
-      drawIris(outerRadius + (1.4 - outerRadius) * closed, closing ? 38 * (1 - closed) : 0);
+      drawIris(outerRadius + (closedRadius - outerRadius) * closed);
       if (elapsed >= closeMs) showCurrentImage();
       animation = requestAnimationFrame(tick);
     }
@@ -88,7 +89,7 @@
     if (toggle.checked && !reducedMotion.matches) {
       capture();
     } else {
-      drawIris(readyRadius, 38);
+      drawIris(readyRadius);
       showCurrentImage();
     }
   }
@@ -112,10 +113,10 @@
   toggle.addEventListener('change', syncPortrait);
   reducedMotion.addEventListener('change', () => {
     settle();
-    drawIris(readyRadius, 38);
+    drawIris(readyRadius);
     showCurrentImage();
   });
   frame.classList.add('has-iris');
-  drawIris(readyRadius, 38);
+  drawIris(readyRadius);
   showCurrentImage();
 })();
