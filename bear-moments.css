@@ -1,0 +1,154 @@
+.bear-button {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 40% 40% 12% 12%;
+  background: transparent;
+  color: inherit;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+.bear-button:disabled { cursor: default; }
+.bear-button::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  translate: -50% 0;
+}
+.bear-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.bear-bubble {
+  --paper: #f1e8d5;
+  position: absolute;
+  left: 85%;
+  bottom: 61%;
+  display: grid;
+  place-items: center;
+  min-width: 1.55rem;
+  height: 1.4rem;
+  padding-inline: .26rem;
+  border-radius: 48% 48% 45% 39%;
+  background: var(--paper);
+  color: #473b30;
+  opacity: 0;
+  transform-origin: 0 95%;
+  pointer-events: none;
+}
+.bear-bubble::before {
+  content: "";
+  position: absolute;
+  bottom: .04rem;
+  left: -.19rem;
+  width: .55rem;
+  height: .46rem;
+  background: var(--paper);
+  clip-path: polygon(94% 0, 100% 82%, 0 100%);
+}
+.count-bubble { font: 1.08rem/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; }
+.bear-bubble[data-visible], .reader-stage[data-idea] .idea-bubble { opacity: 1; }
+
+/* The visitor sees the lens head-on; the regular walk keeps its side view. */
+.front-pose, .visitor-flare, .bear-actor[data-visitor] .side-pose { opacity: 0; }
+.bear-actor[data-visitor] .front-pose { opacity: 1; }
+.bear-actor[data-visitor] .bear-facing { transform: none; }
+.visitor-camera { transform: translateY(-.3px); }
+.bear-actor:is([data-visitor="aim"], [data-visitor="shot"]) .visitor-camera { transform: translateY(-12px); }
+.bear-actor[data-visitor="shot"] .visitor-flare { opacity: 1; }
+
+/* The paper is hinged at the middle of the spread. Feet rest on the masthead rule. */
+.reading-masthead { position: relative; }
+.reader-stage {
+  position: absolute;
+  z-index: 2;
+  bottom: -1px;
+  left: 50%;
+  translate: -50% 0;
+}
+.reader-button {
+  position: relative;
+  height: clamp(3.1rem, 4.6vw, 3.65rem);
+  aspect-ratio: 56 / 60;
+}
+.reader-art { display: block; width: 100%; height: 100%; overflow: visible; }
+.reader-torso { transform: translateY(6.6px) scale(1, .97); }
+.far-foot { transform: translateX(-3.5px) scale(1.1, .62); }
+.near-foot { transform: translateX(3.5px) scale(1.09, .65); }
+.reader-neck, .reader-scan { transform-origin: 0 -22px; }
+.reader-neck { transform: translate(.6px, .6px) rotate(12deg); }
+.reader-gaze { transform-origin: 2px -31.5px; transform: translate(.4px, .8px); }
+.reader-paper { transform-origin: -5px -20px; }
+.reader-arm { transform-origin: 4.6px -19.2px; }
+.reader-leaf { transform-origin: 0 0; }
+.idea-bubble { bottom: 62%; }
+.reader-stage[data-idea] :is(.reader-torso, .reader-foot) { transform: none; }
+.reader-stage[data-idea] .reader-neck { transform: translate(.2px, -.6px) rotate(-11deg); }
+.reader-stage[data-idea] .reader-gaze { transform: translate(.8px, -.8px); }
+.reader-stage[data-idea] .reader-paper { transform: translate(-2.5px, 3.1px) rotate(19deg); }
+.reader-stage[data-idea] .reader-arm { transform: rotate(-57deg) scaleX(1.12); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bear-bubble { transform: scale(.78); transition: opacity .15s ease-out, transform .21s cubic-bezier(.2,.8,.3,1.18); }
+  .bear-bubble[data-visible], .reader-stage[data-idea] .idea-bubble { transform: scale(1); }
+  .front-pose, .side-pose { transition: opacity .18s ease-in-out; }
+  .visitor-camera { transition: opacity .18s ease, transform .44s cubic-bezier(.25,.78,.22,1); }
+  .bear-actor[data-visitor="shot"] .visitor-flare { animation: visitor-shutter .33s ease-out both; }
+  .reader-scan { animation: following-lines 6.6s ease-in-out infinite; }
+  .reader-gaze { animation: reading-eyes 6.6s linear infinite; }
+  .reader-leaf { animation: turn-paper 8.8s ease-in-out infinite; }
+  .reader-arm { animation: lift-page-corner 8.8s ease-in-out infinite; }
+  .reader-stage[data-resting] :is(.reader-scan, .reader-gaze, .reader-leaf, .reader-arm) { animation-play-state: paused; }
+  .reader-stage[data-idea] :is(.reader-scan, .reader-gaze, .reader-leaf, .reader-arm) { animation: none; }
+  .reader-torso, .reader-foot, .reader-neck, .reader-arm, .reader-paper { transition: transform .34s cubic-bezier(.24,.65,.32,1); }
+  .reader-stage[data-idea] :is(.reader-torso, .reader-foot, .reader-neck, .reader-arm, .reader-paper) { transition: transform .34s .09s cubic-bezier(.17,.78,.32,1.12); }
+  .reader-stage[data-idea] .reader-rise { animation: reader-stands .57s both; }
+  .reader-stage[data-idea] .idea-bubble { transition-delay: .26s; }
+}
+@keyframes visitor-shutter {
+  0%, 100% { opacity: 0; transform: scale(.35); }
+  18% { opacity: 1; transform: scale(1.13); }
+  58% { opacity: .68; transform: scale(.85); }
+}
+@keyframes following-lines {
+  0%, 39%, 73%, 100% { transform: rotate(-2deg); }
+  28%, 63%, 90% { transform: translate(.55px, .55px) rotate(2.5deg); }
+}
+@keyframes reading-eyes {
+  0%, 38%, 74%, 100% { transform: translate(-.7px, .7px); }
+  29%, 63%, 90% { transform: translate(1px, 1px); }
+  66%, 70% { transform: translate(.2px, 1px) scaleY(1); }
+  68% { transform: translate(.2px, 1px) scaleY(.12); }
+}
+@keyframes turn-paper {
+  0%, 44%, 66%, 100% { opacity: 1; transform: none; }
+  48% { transform: scaleX(.84) skewY(-12deg); }
+  53% { transform: scaleX(.08) skewY(-26deg); }
+  58%, 60% { opacity: 1; transform: scaleX(-.9) skewY(-9deg); }
+  63% { opacity: 0; transform: scaleX(-.96) skewY(-6deg); }
+  63.1% { opacity: 0; transform: none; }
+}
+@keyframes lift-page-corner {
+  0%, 44%, 64%, 100% { rotate: 0deg; }
+  50% { rotate: -16deg; }
+  55% { rotate: -9deg; }
+}
+@keyframes reader-stands {
+  0%, 100% { transform: none; }
+  17% { transform: translateY(.8px) scale(1.035, .96); }
+  49% { transform: translateY(-3.7px) scale(.99, 1.015); }
+  77% { transform: translateY(.2px) scale(1.015, .99); }
+}
+@media (max-width: 44rem) {
+  .reading-masthead { padding-bottom: 2.95rem; }
+  .reader-button { height: 2.55rem; }
+  .bear-bubble { min-width: 1.36rem; height: 1.25rem; }
+  .idea-bubble svg { width: 14px; height: 16px; }
+}

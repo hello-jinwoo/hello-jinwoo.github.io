@@ -1,0 +1,153 @@
+.has-photo-walk { position: relative; }
+.masthead-tools { display: flex; align-items: center; gap: .45rem; }
+.walk-switch {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--secondary);
+  opacity: .68;
+  cursor: pointer;
+}
+.walk-switch[hidden], .walk-switch .play-mark,
+.walk-switch[aria-pressed="true"] .pause-mark { display: none; }
+.walk-switch[aria-pressed="true"] .play-mark { display: inline; }
+.walk-switch:hover, .walk-switch:focus-visible { opacity: 1; color: var(--brass); }
+@media (hover: hover) {
+  .has-photo-walk:not(:hover):not(:focus-within) .walk-switch[aria-pressed="false"] { opacity: 0; }
+}
+
+/* Everything is positioned from the header rule. The figure never takes a grid cell. */
+.photo-walk {
+  --bear-height: clamp(2.4rem, 3.75vw, 3rem);
+  --door-height: calc(var(--bear-height) * 1.14);
+  position: absolute;
+  z-index: 3;
+  inset: auto 0 -1px;
+  height: 0;
+  pointer-events: none;
+}
+.bear-actor { position: absolute; inset: 0 auto auto 50%; width: 0; height: 0; }
+.photo-walk[data-ready] .bear-actor { left: 0; }
+.photo-walk .photographer-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: calc(var(--bear-height) * 50 / 56);
+  height: var(--bear-height);
+  min-height: 0;
+  translate: -50% 0;
+  pointer-events: auto;
+}
+.photo-walk[data-place="waiting"] .photographer-button { visibility: hidden; }
+.bear-actor.at-threshold .photographer-button { pointer-events: none; }
+.bear-scale, .bear-facing, .bear-art { display: block; width: 100%; height: 100%; }
+.bear-scale { transform-origin: 50% 95%; }
+.bear-actor[data-facing="left"] .bear-facing { transform: scaleX(-1); }
+.bear-actor.at-threshold .bear-scale { transform: translateY(-1px) scale(.63); opacity: 0; }
+.bear-head { transform-origin: 0 -21px; }
+.bear-body { transform-origin: 0 -8px; }
+.bear-camera { transform-origin: 2px -16px; }
+.bear-shin, .bear-pad { transform-box: view-box; transform-origin: 0 0; }
+.lens-light { opacity: 0; }
+.bear-actor[data-pose="notice"] .bear-head { transform: translateX(1px) rotate(-7deg); }
+.bear-actor[data-pose="open-door"] .bear-camera { transform: translate(2.8px, -1.6px) rotate(5deg); }
+.bear-actor:is([data-pose="aim"], [data-pose="aim-up"]) .bear-camera { transform: translate(-.8px, -10.7px) rotate(-4deg); }
+.bear-actor:is([data-pose="aim"], [data-pose="aim-up"]) .bear-head { transform: translate(1px, .3px) rotate(-5deg); }
+.bear-actor[data-pose="aim-up"] .bear-camera { transform: translate(-1.7px, -11.2px) rotate(-19deg); }
+.bear-actor[data-pose="aim-up"] .bear-head { transform: translate(1px, -.6px) rotate(-14deg); }
+.bear-actor.firing .lens-light { opacity: 1; }
+
+.walk-door, .walk-subject {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.walk-door {
+  height: var(--door-height);
+  width: calc(var(--door-height) * 38 / 49);
+  transform: translate(-50%, var(--floor, 0px));
+  overflow: visible;
+}
+.walk-door.visible, .walk-subject.visible { opacity: 1; visibility: visible; }
+.door-panel { transform-box: fill-box; transform-origin: left center; }
+.walk-door.open .door-panel { transform: perspective(75px) rotateY(-74deg) skewY(-3deg); }
+.walk-subject {
+  width: calc(var(--bear-height) * .91);
+  height: calc(var(--bear-height) * .91);
+  translate: -50% 0;
+  overflow: visible;
+}
+.walk-subject [data-motif] { display: none; }
+.walk-subject[data-subject="pine"] [data-motif="pine"],
+.walk-subject[data-subject="flower"] [data-motif="flower"],
+.walk-subject[data-subject="snow"] [data-motif="snow"],
+.walk-subject[data-subject="puppy"] [data-motif="puppy"],
+.walk-subject[data-subject="leaf"] [data-motif="leaf"] { display: inline; }
+.walk-subject[data-reverse] [data-motif="puppy"] { transform: translateX(48px) scaleX(-1); }
+.boughs { transform-origin: 24px 38px; }
+.petals { transform-origin: 22px 23px; }
+.crystal { transform-origin: 24px 17px; }
+.puppy-tail { transform-origin: 33px 35px; }
+.falling-leaf { transform-origin: 24px 35px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .portrait-opening .photo-walk:not([data-ready]) .bear-actor,
+  .photo-walk[data-place="waiting"] .bear-actor { opacity: 0; pointer-events: none; }
+  .bear-actor.arriving .photographer-button { animation: bear-arrives .48s .1s ease-out both; }
+  .bear-scale { transition: transform .35s ease-in-out, opacity .32s ease-in-out; }
+  .bear-head, .bear-camera { transition: transform .34s cubic-bezier(.34,0,.22,1); }
+  .bear-actor[data-pose="walk"] .bear-art { overflow: visible; }
+  .bear-actor[data-pose="walk"] .bear-body { animation: bear-bounce var(--footfall) ease-in-out infinite; }
+  .bear-actor[data-pose="walk"] .bear-head { animation: bear-nod var(--footfall) ease-in-out infinite; }
+  .bear-actor[data-pose="walk"] .hat-pom { animation: pom-follow var(--footfall) ease-in-out infinite; }
+  .bear-actor.firing .lens-light { animation: bear-shutter .32s ease-out both; }
+  .walk-door, .walk-subject { transition: opacity .32s ease, visibility 0s linear .32s; }
+  .walk-door.visible, .walk-subject.visible { transition-delay: 0s; }
+  .door-panel { transition: transform .5s cubic-bezier(.32,.02,.2,1); }
+  .walk-subject.visible .boughs { animation: pine-breeze 2.8s ease-in-out both; }
+  .walk-subject.visible .petals { animation: flower-open 1.45s cubic-bezier(.3,.03,.22,1) both; }
+  .walk-subject.visible .crystal { animation: snow-drift 2.7s ease-in-out both; }
+  .walk-subject.visible .snow-dust { animation: snow-drift 2.2s .15s ease-out both; }
+  .walk-subject.visible .puppy { animation: puppy-arrives .98s ease-out both; }
+  .walk-subject.visible .puppy-tail { animation: tail-wag .26s ease-in-out 15 alternate; }
+  .walk-subject.visible .falling-leaf { animation: leaf-settles 2.5s ease-in-out both; }
+}
+@keyframes bear-arrives { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bear-bounce {
+  0%, 100% { transform: none; }
+  14% { transform: translateY(.48px) scale(1.012, .99); }
+  53% { transform: translateY(-2px) scale(1, 1.008); }
+  78% { transform: translateY(-1.05px); }
+}
+@keyframes bear-nod {
+  0%, 100% { transform: none; }
+  30% { transform: translateY(.52px); }
+  77% { transform: translateY(-.44px); }
+}
+@keyframes pom-follow {
+  0%, 100% { transform: none; }
+  39% { transform: translate(.16px, 1.15px); }
+  83% { transform: translate(-.12px, -.8px); }
+}
+@keyframes bear-shutter { 0% { opacity: 0; } 15% { opacity: 1; } 42% { opacity: .84; } 100% { opacity: 0; } }
+@keyframes pine-breeze { 0% { transform: rotate(-5deg) scale(.9,.94); } 32% { transform: rotate(4deg); } 66% { transform: rotate(-2deg); } }
+@keyframes flower-open { from { transform: scale(.16) rotate(-26deg); } 70% { transform: scale(1.05) rotate(3deg); } to { transform: none; } }
+@keyframes snow-drift { from { opacity: 0; transform: translate(5px,-6px) rotate(-18deg); } 20% { opacity: 1; } 48% { transform: translate(-4px,2px) rotate(12deg); } to { transform: translate(1px,11px) rotate(-7deg); } }
+@keyframes puppy-arrives { from { transform: translate(7px,-2px); } 42% { transform: translate(3px,0); } 62% { transform: translate(1.8px,-1.7px); } }
+@keyframes tail-wag { from { transform: rotate(-14deg); } to { transform: rotate(16deg); } }
+@keyframes leaf-settles { 0% { transform: translate(8px,-15px) rotate(49deg); } 40% { transform: translate(-4px,-9px) rotate(-25deg); } 72% { transform: translate(2px,-3px) rotate(8deg); } 100% { transform: rotate(-8deg); } }
+@media (max-width: 44rem) {
+  .has-photo-walk { padding-bottom: 2.95rem; }
+  .photo-walk { --bear-height: 2.12rem; }
+  .masthead-tools { gap: .08rem; }
+  .walk-switch { width: 1.5rem; }
+}
+@media print { .photo-walk, .walk-switch { display: none; } }

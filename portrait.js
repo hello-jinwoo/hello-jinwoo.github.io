@@ -1,122 +1,88 @@
 (() => {
-  const frame = document.querySelector('.portrait-frame');
-  const toggle = frame.querySelector('.portrait-toggle');
-  const face = frame.querySelector('.blade-face');
-  const seam = frame.querySelector('.blade-seam');
-  const ring = frame.querySelector('.blade-ring');
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const bladeCount = 9;
-  const pitch = 2 * Math.PI / bladeCount;
-  const cos = Math.cos(pitch);
-  const sin = Math.sin(pitch);
-  const closedRadius = 1.4;
-  const readyRadius = 134;
-  const openRadius = 224;
-  const rim = [202, -227];
-  let animation = 0;
-  const hint = frame.querySelector('.shoot-hint');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const atCover = ['', '#top', '#main'].includes(location.hash);
+  if (!atCover || motion.matches || document.hidden || scrollY > 8) return;
 
-  for (let index = 0; index < bladeCount; index++) {
-    const blade = document.createElementNS(ring.namespaceURI, 'use');
-    blade.setAttribute('href', '#aperture-blade');
-    blade.setAttribute('transform', 'rotate(' + index * 360 / bladeCount + ')');
-    ring.append(blade);
+  const root = document.documentElement;
+  const events = new AbortController();
+  const options = { signal: events.signal };
+  const lightMask = new Image();
+  lightMask.src = 'assets/portrait-flash-mask.png';
+  let deadline;
+  let cover;
+
+  function finish(completed = false) {
+    if (events.signal.aborted) return;
+    clearTimeout(deadline);
+    root.classList.remove('portrait-opening');
+    cover?.classList.remove('taking-portrait', 'printing-caption');
+    events.abort();
+    document.dispatchEvent(new CustomEvent('portrait-ended', { detail: { completed: completed === true } }));
   }
 
-  function nextBlade([x, y]) {
-    return [x * cos - y * sin, x * sin + y * cos];
-  }
-
-  // Each leaf ends at the swept edge of its neighbour, at every aperture size.
-  const nextRim = nextBlade(rim);
-  function drawIris(radius) {
-    const closed = (openRadius - radius) / (openRadius - closedRadius);
-    const tip = [radius, 0];
-    const innerControl = [radius * .925, radius * .337];
-    const sweep = [radius + (275 - radius) * .6, -17 - 13 * closed];
-    const outline = 'M' + tip + 'Q' + innerControl + ' ' + nextBlade(tip) +
-      'Q' + nextBlade(sweep) + ' ' + nextRim + 'A304 304 0 0 0 ' + rim +
-      'Q' + sweep + ' ' + tip + 'Z';
-    face.setAttribute('d', outline);
-    seam.setAttribute('d', 'M' + tip + 'Q' + sweep + ' ' + rim);
-    ring.setAttribute('transform', 'rotate(' + (-16 + 26 * closed) + ')');
-  }
-
-  function settle() {
-    cancelAnimationFrame(animation);
-    animation = 0;
-    frame.classList.remove('is-exposing');
-  }
-
-  function ease(t) {
-    return t * t * (3 - 2 * t);
-  }
-
-  function showCurrentImage() {
-    frame.classList.toggle('is-developed', toggle.checked);
-  }
-
-  function capture() {
-    drawIris(readyRadius);
-    frame.classList.add('is-exposing');
-    const start = performance.now();
-    const closeMs = 178;
-    const openAt = closeMs + 22;
-    const openMs = 278;
-
-    function tick(now) {
-      const elapsed = Math.max(0, now - start);
-      if (elapsed >= openAt + openMs) {
-        showCurrentImage();
-        settle();
-        return;
-      }
-      const closing = elapsed < openAt;
-      const closed = closing
-        ? ease(Math.min(1, elapsed / closeMs))
-        : 1 - ease((elapsed - openAt) / openMs);
-      const outerRadius = closing ? readyRadius : openRadius;
-      drawIris(outerRadius + (closedRadius - outerRadius) * closed);
-      if (elapsed >= closeMs) showCurrentImage();
-      animation = requestAnimationFrame(tick);
-    }
-    animation = requestAnimationFrame(tick);
-  }
-
-  function syncPortrait() {
-    settle();
-    hint.textContent = toggle.checked ? 'Back to RAW' : 'Click to shoot 📸';
-    if (toggle.checked && !reducedMotion.matches) {
-      capture();
-    } else {
-      drawIris(readyRadius);
-      showCurrentImage();
+  async function start() {
+    try {
+      cover = document.querySelector('.cover');
+      const frame = cover.querySelector('.portrait-frame');
+      const photo = frame.querySelector('.portrait-color');
+      frame.addEventListener('pointerdown', finish, { ...options, passive: true });
+      await Promise.all([
+        photo.decode(), lightMask.decode(),
+        document.fonts.load('1em "Instrument Serif"', '321Jinwoo'),
+        document.fonts.load('italic 1em "Instrument Serif"', 'Kim')
+      ]);
+      if (events.signal.aborted) return;
+      const bounds = frame.getBoundingClientRect();
+      if (document.hidden || motion.matches || scrollY > 8 || bounds.bottom <= 0 || bounds.top >= innerHeight) return;
+      clearTimeout(deadline);
+      cover.classList.add('taking-portrait');
+      const exposure = photo.getAnimations().find(animation => animation.animationName === 'develop-portrait');
+      if (!exposure) return;
+      const release = exposure.effect.getTiming().delay;
+      deadline = setTimeout(finish, release + 6500);
+      let lowerDoor;
+      document.dispatchEvent(new CustomEvent('portrait-started', { detail: {
+        release,
+        waitForLowerDoor(passage) {
+          if (lowerDoor) {
+            clearTimeout(deadline);
+            deadline = setTimeout(finish, Math.max(release, 6500) + 1800);
+          }
+          lowerDoor = passage;
+        }
+      } }));
+      await exposure.finished;
+      // A visitor can ask for a picture while the bear is still on the lower floor.
+      let passage;
+      do {
+        passage = lowerDoor;
+        await passage;
+      } while (passage !== lowerDoor);
+      if (events.signal.aborted) return;
+      cover.classList.add('printing-caption');
+      const ink = cover.getAnimations({ subtree: true }).filter(animation => animation.animationName === 'print-caption');
+      clearTimeout(deadline);
+      deadline = setTimeout(finish, Math.max(0, ...ink.map(animation => animation.effect.getComputedTiming().endTime)) + 400);
+      await Promise.all(ink.map(animation => animation.finished));
+      finish(true);
+    } catch {
+      // An unavailable exposure or an interrupted animation goes straight to the finished cover.
+    } finally {
+      finish();
     }
   }
 
-  function positionHint(event) {
-    if (event.pointerType === 'touch') return;
-    const rect = frame.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    const gap = 13;
-    const left = x + gap + hint.offsetWidth < rect.width ? x + gap : x - hint.offsetWidth - gap;
-    const top = y + gap + hint.offsetHeight < rect.height ? y + gap : y - hint.offsetHeight - gap;
-    frame.style.setProperty('--hint-x', Math.max(2, left) + 'px');
-    frame.style.setProperty('--hint-y', Math.max(2, top) + 'px');
-    frame.classList.add('has-pointer');
-  }
+  motion.addEventListener('change', finish, options);
+  document.addEventListener('portrait-skip', finish, options);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) finish(); }, options);
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') finish(); }, options);
+  window.addEventListener('scroll', () => { if (scrollY > 8) finish(); }, { ...options, passive: true });
+  window.addEventListener('pagehide', finish, options);
+  window.addEventListener('hashchange', finish, options);
 
-  frame.addEventListener('pointerenter', positionHint);
-  frame.addEventListener('pointermove', positionHint);
-  frame.addEventListener('pointerleave', () => frame.classList.remove('has-pointer'));
-  toggle.addEventListener('change', syncPortrait);
-  reducedMotion.addEventListener('change', () => {
-    settle();
-    drawIris(readyRadius);
-    showCurrentImage();
-  });
-  frame.classList.add('has-iris');
-  drawIris(readyRadius);
-  showCurrentImage();
+  // Restore the full masthead if the image or type cannot be prepared promptly.
+  deadline = setTimeout(finish, 900);
+  root.classList.add('portrait-opening');
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, options);
+  else start();
 })();
